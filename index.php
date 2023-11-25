@@ -1,91 +1,118 @@
-<?php
- include 'connect.php';
-
- if(isset($_POST['submit']))
- {
-    $name=$_POST['fname'];
-    $lastname=$_POST['lname'];
-    $pwd=$_POST['pwd'];
-    $email=$_POST['email'];
-
-    $sql = "INSERT INTO web (fname,lname,pwd,email)
-    VALUES('$name', '$lastname','$pwd','$email')";
-
-    $result = mysqli_query($con , $sql);
- 
-if($result)
-{
-  header('location:display.php');
-}
-
- }
- 
-
-// if(check)
-// {
-//     echo("connection ok");
-// }
-// else
-// {
-//     echo ("connection failed");
-// }
-?>
-
-
-
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product</title>
+    <!-- CDN PASTE HERE -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
-        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
-    <title>Hello, world!</title>
 </head>
 
 <body>
-    <div class="container my-5">
 
-        <form method="POST">
-            <div class="form-group">
-                <label>First Name</label>
-                <input type="text" class="form-control" placeholder="Enter your name..." name="fname">
+    <div class="container ">
+        <div class="row">
+            <div class="col-md-6 m-auto border border-primary mt-3">
+
+                <form action="insert.php" method="POST" enctype="multipart/form-data">
+
+                    <div class="mb-3">
+                        <p class=" fs-3 text-center fw-bold text-primary">Product Details</p>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Product Name:</label>
+                        <input type="text" name="Pname" class="form-control" placeholder="Enter product name...">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Product Price:</label>
+                        <input type="text"name="Pprice" class="form-control" placeholder="Enter product price...">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Add Product Image:</label>
+                        <input type="file"name="Pimage" class="form-control">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Select Page Category:</label>
+                        <select class="form-select" name="Pages">
+                            <option value="home">Home</option>
+                            <option value="laptop">Laptop</option>
+                            <option value="bag">Bag</option>
+                            <option value="mobile">Mobile</option>
+                        </select>
+                    </div>
+                    <button name="submit" class="bg-primary fs-4 fw-bold my-5 form-control">Upload</button>
+
+                    </div>
+                 </form>
+
+
             </div>
-
-            <div class="form-group">
-                <label>Last Name</label>
-                <input type="text" class="form-control" placeholder="Enter your last name...." name="lname">
-            </div>
-
-            <div class="form-group">
-                <label>Email</label>
-                <input type="text" class="form-control" placeholder="Enter your email..." name="email">
-            </div>
-
-
-            <div class="form-group">
-                <label>Password</label>
-                <input type="text" class="form-control" placeholder="Enter your password" name="pwd">
-            </div>
-
-
-
-
-
-
-            <button type="submit" class="btn btn-primary" name="submit">Submit</button>
-        </form>
+        </div>
     </div>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 
+     
+
+        <!-- fetch Data -->
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 m-auto">
+
+                
+
+  <table class=" shadow table border border-warning  table-hover  my-5">
+  <thead class=" font-monospace font-5 text-center">
+      <th>id</th>
+      <th>Name</th>
+      <th>Price</th>
+      <th>image</th>
+      <th>Category</th>
+      <th>Delete</th>
+    </thead>  
+   
+
+    <tbody class="text-center">
+
+   <?php
+
+   include 'config.php';
+   $record = mysqli_query($con, " SELECT * FROM tblproduct ");
+  while($row = mysqli_fetch_array($record))
+
+  echo"
+  <tr>
+  <td>$row[ID] </td>
+  <td>$row[PName]</td>
+  <td>$row[PPrice]</td>
+  <td><img src=$row[PImage] height='100px' width='150px'></td>
+  <td>$row[PCategory]</td>
+
+  <td> <a href='' class='btn btn-danger'>Home</a></td>
+  
+</tr>
+ ";
+ 
+
+ ?>
+
+
+    </tbody>
+
+
+
+</table>
+
+</div>
+</div>
+</div>
 </body>
 
 </html>
